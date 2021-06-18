@@ -9,7 +9,7 @@ on:
 jobs:
   build:
     name: Build APK, webs and Create release
-    runs-on: ubuntu-latest
+    runs-on: macos-latest
 
     steps:
     - name: Checkout
@@ -31,6 +31,7 @@ jobs:
     - run: flutter build appbundle
 
     - run: flutter build ios --release --no-codesign
+    - run: zip -r ios.zip build/ios/iphones/
 
     - run: flutter build web
     - run: zip -r web.zip build/web/
@@ -38,7 +39,7 @@ jobs:
     - name: Create a Release in GitHub
       uses: ncipollo/release-action@v1.8.6
       with:
-        artifacts: "build/app/outputs/apk/release/*.apk,build/app/outputs/bundle/release/app-release.aab,web.zip"
+        artifacts: "build/app/outputs/apk/release/*.apk,build/app/outputs/bundle/release/app-release.aab,web.zip,ios.zip"
         token: ${{ secrets.GH_TOKEN }}
         tag: v0.3
         commit: ${{ github.sha }}
