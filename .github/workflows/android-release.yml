@@ -1,0 +1,38 @@
+name: Demo Android Release
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  build:
+    name: Build APK and Create release
+    runs-on: ubuntu-latest
+    steps:
+
+      name: Action checkout
+    - uses: actions/checkout@v2
+
+      name: Java Setupu
+    - uses: actions/setup-java@v1
+      with:
+        java-version: '12.x'
+
+    - name: Flutter action
+      uses: subosito/flutter-action@v1.5.3
+      with:
+        channel: 'stable'
+
+    - run: flutter pub get
+    - run: flutter test
+    - run: flutter build apk --release --split-per-abi
+    - run: flutter build appbundle
+
+    - name: Create a Release in GitHub
+      uses: ncipollo/release-action@v1.8.6
+      with:
+        artifacts: "build/app/outputs/apk/release/*.apk,build/app/outputs/bundle/release/app-release.aab"
+        token: ${{ secrets.GH_TOKEN }}
+        tag: v0.1
+        commit: ${{ github.sha }}
+        prerelease: true
