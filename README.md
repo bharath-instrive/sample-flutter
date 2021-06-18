@@ -4,6 +4,8 @@ A new Flutter project.
 
 ## Getting Started
 
+[![Demo Android Release](https://github.com/bharath-instrive/sample-flutter/actions/workflows/android-release.yml/badge.svg?branch=main)](https://github.com/bharath-instrive/sample-flutter/actions/workflows/android-release.yml)
+
 This project is a starting point for a Flutter application.
 
 A few resources to get you started if this is your first Flutter project:
